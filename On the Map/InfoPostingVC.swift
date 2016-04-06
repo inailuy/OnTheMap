@@ -11,4 +11,7 @@ import UIKit
 
 class InfoPostingVC: UIViewController {
     
+    @IBAction func cancelButtonPressed(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: {})
+    }
 }

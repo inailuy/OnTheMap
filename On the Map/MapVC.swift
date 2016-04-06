@@ -8,7 +8,25 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class MapVC: UIViewController {
+    @IBOutlet weak var mapview: MKMapView!
     
+    @IBAction func postButtonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("seguePosting", sender: nil)
+    }
+
+    
+    @IBAction func logoutButtonPressed(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: {})
+    }
+    
+    @IBAction func refreshButtonPressed(sender: AnyObject) {
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+    }
 }
