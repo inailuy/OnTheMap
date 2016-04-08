@@ -16,7 +16,13 @@ class LoginVC: UIViewController , UITextFieldDelegate{
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //print(signupButton)
+    }
+    
     @IBAction func tapGestureRecognized(sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -25,11 +31,24 @@ class LoginVC: UIViewController , UITextFieldDelegate{
         performSegueWithIdentifier("segueModal", sender: nil)
     }
     
-    @IBAction func signupButtonPressed(sender: AnyObject) {
-        
+    @IBAction func signupButtonPressed(sender: AnyObject) {        
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signup")!)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        } else {
+            view.endEditing(true)
+        }
+        return true
+    }
+    
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        return true
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        
     }
 }

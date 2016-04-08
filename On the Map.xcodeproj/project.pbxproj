@@ -15,6 +15,7 @@
 		33BF604F1CB48BF700B40D6D /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF604E1CB48BF700B40D6D /* MapVC.swift */; };
 		33BF60511CB48BFF00B40D6D /* TableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF60501CB48BFF00B40D6D /* TableVC.swift */; };
 		33BF60531CB48C0D00B40D6D /* InfoPostingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF60521CB48C0D00B40D6D /* InfoPostingVC.swift */; };
+		33BF60551CB5CE7100B40D6D /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF60541CB5CE7100B40D6D /* CustomTableViewCell.swift */; };
 		33FC2F651CB5944100039C8F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33FC2F641CB5944100039C8F /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		33BF604E1CB48BF700B40D6D /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		33BF60501CB48BFF00B40D6D /* TableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableVC.swift; sourceTree = "<group>"; };
 		33BF60521CB48C0D00B40D6D /* InfoPostingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPostingVC.swift; sourceTree = "<group>"; };
+		33BF60541CB5CE7100B40D6D /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		33FC2F641CB5944100039C8F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 				33BF604E1CB48BF700B40D6D /* MapVC.swift */,
 				33BF60501CB48BFF00B40D6D /* TableVC.swift */,
 				33BF60521CB48C0D00B40D6D /* InfoPostingVC.swift */,
+				33BF60541CB5CE7100B40D6D /* CustomTableViewCell.swift */,
 				33BF60411CB468D700B40D6D /* Assets.xcassets */,
 				33BF60431CB468D700B40D6D /* LaunchScreen.storyboard */,
 				33BF60461CB468D700B40D6D /* Info.plist */,
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33BF60551CB5CE7100B40D6D /* CustomTableViewCell.swift in Sources */,
 				33BF604F1CB48BF700B40D6D /* MapVC.swift in Sources */,
 				33BF603B1CB468D700B40D6D /* AppDelegate.swift in Sources */,
 				33BF60531CB48C0D00B40D6D /* InfoPostingVC.swift in Sources */,

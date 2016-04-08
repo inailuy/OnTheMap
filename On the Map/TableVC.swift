@@ -24,18 +24,24 @@ class TableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func refreshButtonPressed(sender: AnyObject) {
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-    }
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 15
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
-        let cell = tableView.dequeueReusableCellWithIdentifier("id")
+        let cell = tableView.dequeueReusableCellWithIdentifier("id") as! CustomTableViewCell
+        //cell.fullNameLabel.text = ""
+        //cell.urlLabel.text = ""
         
-        return cell!
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
     }
 }
