@@ -9,18 +9,19 @@
 import Foundation
 import UIKit
 
-class LoginVC: UIViewController , UITextFieldDelegate{
+class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
-    
-    override func viewDidLoad() {
+    override func viewWillAppear(animated: Bool) {
         super.viewDidLoad()
         
-        //print(signupButton)
+        let loginView : FBSDKLoginButton = FBSDKLoginButton()
+        loginView.readPermissions = ["public_profile", "email", "user_friends"]
+        
     }
     
     @IBAction func tapGestureRecognized(sender: UITapGestureRecognizer) {
@@ -28,7 +29,37 @@ class LoginVC: UIViewController , UITextFieldDelegate{
     }
     
     @IBAction func loginButtonPressed(sender: UIButton) {
-        performSegueWithIdentifier("segueModal", sender: nil)
+        //let login = LoginModel(username: emailTextField.text!, password: passwordTextField.text!)
+        let login = LoginModel(email: "inailuy@me.com", password: "Ynn75112")
+        NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
+        
+        startAnimatingIndicator()
+    }
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        print("User Logged In")
+        
+        if ((error) != nil)
+        {
+            // Process error
+        }
+        else if result.isCancelled {
+            // Handle cancellations
+        }
+        else {
+            // If you ask for multiple permissions at once, you
+            // should check if specific permissions missing
+            if result.grantedPermissions.contains("email")
+            {
+                // Do work
+                NetworkArchitecture.sharedInstance.fbAcessToken = result.token
+                NetworkArchitecture.sharedInstance .creatingSession(nil, loginVC: self)
+            }
+        }
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        print("User Logged Out")
     }
     
     @IBAction func signupButtonPressed(sender: AnyObject) {        
@@ -40,6 +71,9 @@ class LoginVC: UIViewController , UITextFieldDelegate{
             passwordTextField.becomeFirstResponder()
         } else {
             view.endEditing(true)
+            let login = LoginModel(email: emailTextField.text!, password: passwordTextField.text!)
+            NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
+            startAnimatingIndicator()
         }
         return true
     }
@@ -50,5 +84,9 @@ class LoginVC: UIViewController , UITextFieldDelegate{
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+    }
+
+    internal func dismissView() {
+        performSegueWithIdentifier("segueModal", sender: nil)
     }
 }

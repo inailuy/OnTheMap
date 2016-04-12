@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class InfoPostingVC: UIViewController {
+class InfoPostingVC: BaseVC {
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: {})
