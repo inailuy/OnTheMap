@@ -29,16 +29,13 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     }
     
     @IBAction func loginButtonPressed(sender: UIButton) {
-        //let login = LoginModel(username: emailTextField.text!, password: passwordTextField.text!)
-        let login = LoginModel(email: "inailuy@me.com", password: "Ynn75112")
+        let login = LoginModel(username: emailTextField.text!, password: passwordTextField.text!)
         NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
         
         startAnimatingIndicator()
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        print("User Logged In")
-        
         if ((error) != nil)
         {
             // Process error
@@ -47,11 +44,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
             // Handle cancellations
         }
         else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if result.grantedPermissions.contains("email")
-            {
-                // Do work
+            if result.grantedPermissions.contains("email") {
                 NetworkArchitecture.sharedInstance.fbAcessToken = result.token
                 NetworkArchitecture.sharedInstance .creatingSession(nil, loginVC: self)
             }
