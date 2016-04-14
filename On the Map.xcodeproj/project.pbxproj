@@ -11,6 +11,9 @@
 		331C3C741CBC6EBD005B65CD /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C3C731CBC6EBD005B65CD /* LocationAnnotation.swift */; };
 		331C3C761CBCA786005B65CD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331C3C751CBCA786005B65CD /* FBSDKCoreKit.framework */; };
 		331C3C791CBCB63F005B65CD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331C3C781CBCB63F005B65CD /* FBSDKLoginKit.framework */; };
+		331C3C7B1CBD5B6C005B65CD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331C3C7A1CBD5B6C005B65CD /* SystemConfiguration.framework */; };
+		331C3C7E1CBD5C9C005B65CD /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 331C3C7D1CBD5C9C005B65CD /* Reachability.m */; };
+		331C3C801CBE091F005B65CD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331C3C7F1CBE091F005B65CD /* CoreLocation.framework */; };
 		333C70301CB834FD00E90E2A /* NetworkArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C702F1CB834FD00E90E2A /* NetworkArchitecture.swift */; };
 		333C70321CB835AD00E90E2A /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C70311CB835AD00E90E2A /* BaseVC.swift */; };
 		333C70341CB83A5000E90E2A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333C70331CB83A5000E90E2A /* LoginModel.swift */; };
@@ -31,6 +34,10 @@
 		331C3C751CBCA786005B65CD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		331C3C771CBCAE31005B65CD /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		331C3C781CBCB63F005B65CD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		331C3C7A1CBD5B6C005B65CD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		331C3C7C1CBD5C9C005B65CD /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		331C3C7D1CBD5C9C005B65CD /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		331C3C7F1CBE091F005B65CD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		333C702F1CB834FD00E90E2A /* NetworkArchitecture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkArchitecture.swift; sourceTree = "<group>"; };
 		333C70311CB835AD00E90E2A /* BaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		333C70331CB83A5000E90E2A /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -52,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				331C3C801CBE091F005B65CD /* CoreLocation.framework in Frameworks */,
+				331C3C7B1CBD5B6C005B65CD /* SystemConfiguration.framework in Frameworks */,
 				33FC2F651CB5944100039C8F /* MapKit.framework in Frameworks */,
 				331C3C761CBCA786005B65CD /* FBSDKCoreKit.framework in Frameworks */,
 				331C3C791CBCB63F005B65CD /* FBSDKLoginKit.framework in Frameworks */,
@@ -66,8 +75,10 @@
 			children = (
 				33BF60391CB468D700B40D6D /* On the Map */,
 				33BF60381CB468D700B40D6D /* Products */,
+				331C3C7F1CBE091F005B65CD /* CoreLocation.framework */,
 				331C3C781CBCB63F005B65CD /* FBSDKLoginKit.framework */,
 				331C3C751CBCA786005B65CD /* FBSDKCoreKit.framework */,
+				331C3C7A1CBD5B6C005B65CD /* SystemConfiguration.framework */,
 				33FC2F641CB5944100039C8F /* MapKit.framework */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +106,8 @@
 				333C70331CB83A5000E90E2A /* LoginModel.swift */,
 				331C3C731CBC6EBD005B65CD /* LocationAnnotation.swift */,
 				331C3C771CBCAE31005B65CD /* Bridging-Header.h */,
+				331C3C7C1CBD5C9C005B65CD /* Reachability.h */,
+				331C3C7D1CBD5C9C005B65CD /* Reachability.m */,
 				33BF60411CB468D700B40D6D /* Assets.xcassets */,
 				33BF60431CB468D700B40D6D /* LaunchScreen.storyboard */,
 				33BF60461CB468D700B40D6D /* Info.plist */,
@@ -181,6 +194,7 @@
 				33BF604F1CB48BF700B40D6D /* MapVC.swift in Sources */,
 				331C3C721CBAE50C005B65CD /* StudentLocationModel.swift in Sources */,
 				33BF603B1CB468D700B40D6D /* AppDelegate.swift in Sources */,
+				331C3C7E1CBD5C9C005B65CD /* Reachability.m in Sources */,
 				333C70321CB835AD00E90E2A /* BaseVC.swift in Sources */,
 				333C70341CB83A5000E90E2A /* LoginModel.swift in Sources */,
 				333C70301CB834FD00E90E2A /* NetworkArchitecture.swift in Sources */,

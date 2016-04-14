@@ -19,7 +19,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func fetchData() {
-        tableView.alpha = 0.5
+        tableView.alpha = 0.4
         startAnimatingIndicator()
         NetworkArchitecture.sharedInstance.getStudentLocations() {
             () in
@@ -32,6 +32,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func postButtonPressed(sender: AnyObject) {
+        NetworkArchitecture.sharedInstance.getStudentLocation()
         performSegueWithIdentifier("seguePosting", sender: nil)
     }
     

@@ -17,3 +17,11 @@ struct LoginModel {
     }
 }
 
+struct UserModel {
+    let firstName: String!
+    let lastName: String!
+    let uniqueKey: String!
+    let sessionId: String!
+    
+}
+

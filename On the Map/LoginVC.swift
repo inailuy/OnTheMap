@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 import UIKit
 
 class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
@@ -18,10 +19,8 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     
     override func viewWillAppear(animated: Bool) {
         super.viewDidLoad()
-        
         let loginView : FBSDKLoginButton = FBSDKLoginButton()
         loginView.readPermissions = ["public_profile", "email", "user_friends"]
-        
     }
     
     @IBAction func tapGestureRecognized(sender: UITapGestureRecognizer) {
@@ -46,13 +45,12 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         else {
             if result.grantedPermissions.contains("email") {
                 NetworkArchitecture.sharedInstance.fbAcessToken = result.token
-                NetworkArchitecture.sharedInstance .creatingSession(nil, loginVC: self)
+                NetworkArchitecture.sharedInstance.creatingSession(nil, loginVC: self)
             }
         }
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        print("User Logged Out")
     }
     
     @IBAction func signupButtonPressed(sender: AnyObject) {        
@@ -65,7 +63,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         } else {
             view.endEditing(true)
             let login = LoginModel(email: emailTextField.text!, password: passwordTextField.text!)
-            NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
+            NetworkArchitecture.sharedInstance.creatingSession(login, loginVC: self)
             startAnimatingIndicator()
         }
         return true
@@ -73,10 +71,6 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         return true
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
     }
 
     internal func dismissView() {

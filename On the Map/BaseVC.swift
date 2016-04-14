@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BaseVC: UIViewController {
+class BaseVC: UIViewController, UIAlertViewDelegate {
     var activityIndicator : UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -17,30 +17,29 @@ class BaseVC: UIViewController {
         
         activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
         activityIndicator.frame = CGRectMake(view.frame.size.width/2 - 25, view.frame.size.height/2 - 25, 50, 50);
+        view.addSubview(activityIndicator)
     }
     
     override func viewWillDisappear(animated: Bool) {
-        stopAnimatingIndicator()
+        //stopAnimatingIndicator()
         super.viewWillDisappear(animated)
     }
     
     func startAnimatingIndicator(){
-        view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
+        activityIndicator.hidden = false
     }
     
     func stopAnimatingIndicator(){
         activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
+        activityIndicator.hidden = true
     }
     
     internal func handleErrors(errorMessage: String) {
         stopAnimatingIndicator()
-        
         let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle:UIAlertControllerStyle.Alert)
         let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
         alert.addAction(action)
-        
         self.presentViewController(alert, animated: true, completion: nil)
     }
     

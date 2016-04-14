@@ -15,12 +15,13 @@ class MapVC: BaseVC, MKMapViewDelegate {
     var mapAnnotations : NSMutableArray!
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         fetchData()
     }
    
     @IBAction func postButtonPressed(sender: AnyObject) {
+        NetworkArchitecture.sharedInstance.getStudentLocation()
         performSegueWithIdentifier("seguePosting", sender: nil)
     }
 
