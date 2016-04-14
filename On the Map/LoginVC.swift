@@ -29,7 +29,6 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     @IBAction func loginButtonPressed(sender: UIButton) {
         let login = LoginModel(email: emailTextField.text!, password: passwordTextField.text!)
         NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
-        
         startAnimatingIndicator()
     }
     

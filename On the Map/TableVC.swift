@@ -57,8 +57,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     func fetchData() {
         tableView.alpha = 0.4
         startAnimatingIndicator()
-        NetworkArchitecture.sharedInstance.getStudentLocations() {
-            () in
+        NetworkArchitecture.sharedInstance.getStudentLocations() { () in
             dispatch_async(dispatch_get_main_queue(), {
                 self.tableView.alpha = 1.0
                 self.stopAnimatingIndicator()
