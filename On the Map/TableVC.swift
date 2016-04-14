@@ -5,10 +5,6 @@
 //  Created by inailuy on 4/5/16.
 //  Copyright © 2016 inailuy. All rights reserved.
 //
-
-import Foundation
-import UIKit
-
 class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
@@ -17,20 +13,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         fetchData()
     }
-    
-    func fetchData() {
-        tableView.alpha = 0.4
-        startAnimatingIndicator()
-        NetworkArchitecture.sharedInstance.getStudentLocations() {
-            () in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.tableView.alpha = 1.0
-                self.stopAnimatingIndicator()
-                self.tableView.reloadData()
-            })
-        }
-    }
-    
+    // MARK: Button Actions
     @IBAction func postButtonPressed(sender: AnyObject) {
         NetworkArchitecture.sharedInstance.getStudentLocation()
         performSegueWithIdentifier("seguePosting", sender: nil)
@@ -44,7 +27,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     @IBAction func refreshButtonPressed(sender: AnyObject) {
         fetchData()
     }
-    
+    // MARK: UITableView Delegate/DataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return NetworkArchitecture.sharedInstance.studentLocationArray.count
     }
@@ -70,8 +53,17 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             handleErrors("Link is not a proper URL")
         }
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+    //MARK: Misc
+    func fetchData() {
+        tableView.alpha = 0.4
+        startAnimatingIndicator()
+        NetworkArchitecture.sharedInstance.getStudentLocations() {
+            () in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.alpha = 1.0
+                self.stopAnimatingIndicator()
+                self.tableView.reloadData()
+            })
+        }
     }
 }

@@ -5,10 +5,6 @@
 //  Created by inailuy on 4/8/16.
 //  Copyright © 2016 inailuy. All rights reserved.
 //
-
-import Foundation
-import SystemConfiguration
-
 class NetworkArchitecture {
 
     let GET = "GET"
@@ -167,7 +163,7 @@ class NetworkArchitecture {
     
     func postStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool) -> Void) {
         if studentLocation.objectId != "" {
-            self.putStudentLocation(studentLocation, completion: completion)
+            putStudentLocation(studentLocation, completion: completion)
             return
         }
         
@@ -179,12 +175,11 @@ class NetworkArchitecture {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = studentLocation.objectToString().dataUsingEncoding(NSUTF8StringEncoding)
         session = NSURLSession.sharedSession()
-        print(studentLocation.objectToString())
+        
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error…
                 return
             }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             completion(didFinished: true)
         }
         task.resume()
@@ -200,12 +195,10 @@ class NetworkArchitecture {
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { /* Handle error */ return }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             do {
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject] {
                     let array = json["results"] as! NSArray
                     self.currentStudentLocation = StudentLocationModel(fromDict: array.lastObject as! NSDictionary)
-                    print(self.currentStudentLocation)
                 }
             }
             catch {
@@ -230,7 +223,6 @@ class NetworkArchitecture {
             if error != nil { // Handle error…
                 return
             }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             completion(didFinished: true)
         }
         task.resume()

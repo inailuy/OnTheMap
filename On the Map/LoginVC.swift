@@ -5,11 +5,6 @@
 //  Created by inailuy on 4/5/16.
 //  Copyright © 2016 inailuy. All rights reserved.
 //
-
-import Foundation
-import CoreLocation
-import UIKit
-
 class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -30,17 +25,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         indentTextField(passwordTextField)
         
     }
-    
-    func indentTextField(textField:  UITextField) {
-        let spacerView = UIView(frame:CGRect(x:0, y:0, width:15, height:15))
-        textField.leftViewMode = UITextFieldViewMode.Always
-        textField.leftView = spacerView
-    }
-    
-    @IBAction func tapGestureRecognized(sender: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
-    
+    //MARK: Button/Gesture Actions
     @IBAction func loginButtonPressed(sender: UIButton) {
         let login = LoginModel(email: emailTextField.text!, password: passwordTextField.text!)
         NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
@@ -49,8 +34,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        if ((error) != nil)
-        {
+        if ((error) != nil){
             // Process error
         }
         else if result.isCancelled {
@@ -65,7 +49,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        //FBSDK Required method
+        //FBSDK Required Method
     }
     
     @IBAction func signupButtonPressed(sender: AnyObject) {        
@@ -84,11 +68,17 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         return true
     }
     
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        return true
+    @IBAction func tapGestureRecognized(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
-
+    //MARK: Misc
     internal func dismissView() {
         performSegueWithIdentifier("segueModal", sender: nil)
+    }
+    
+    func indentTextField(textField:  UITextField) {
+        let spacerView = UIView(frame:CGRect(x:0, y:0, width:15, height:15))
+        textField.leftViewMode = UITextFieldViewMode.Always
+        textField.leftView = spacerView
     }
 }

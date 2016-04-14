@@ -5,10 +5,6 @@
 //  Created by inailuy on 4/10/16.
 //  Copyright © 2016 inailuy. All rights reserved.
 //
-
-import Foundation
-import MapKit
-
 struct StudentLocationModel {
     var objectId : String
     var uniqueKey: String
@@ -31,14 +27,14 @@ struct StudentLocationModel {
     }
     
     init(fromDict dict: NSDictionary) {
-            self.objectId = dict["objectId"] as! String
-            self.uniqueKey = dict["uniqueKey"] as! String
-            self.firstName = dict["firstName"] as! String
-            self.lastName = dict["lastName"] as! String
-            self.mapString = dict["mapString"] as! String
-            self.mediaURL = dict["mediaURL"] as! String
-            self.latitude = dict["latitude"] as! Float
-            self.longitude = dict["longitude"] as! Float
+        self.objectId = dict["objectId"] as! String
+        self.uniqueKey = dict["uniqueKey"] as! String
+        self.firstName = dict["firstName"] as! String
+        self.lastName = dict["lastName"] as! String
+        self.mapString = dict["mapString"] as! String
+        self.mediaURL = dict["mediaURL"] as! String
+        self.latitude = dict["latitude"] as! Float
+        self.longitude = dict["longitude"] as! Float
     }
     
     func objectToString() -> String {
@@ -54,7 +50,7 @@ struct StudentLocationModel {
     }
     
     func objectToJSON() -> [String: AnyObject] {
-        let jsonObject: [String: AnyObject] = [
+        return [
             "uniqueKey": uniqueKey,
             "firstName": firstName,
             "lastName": lastName,
@@ -63,9 +59,8 @@ struct StudentLocationModel {
             "latitude": latitude,
             "longitude": longitude
         ]
-        return jsonObject
     }
-
+    // Convenience
     func fullName() -> String {
         return firstName + " " + lastName
     }
@@ -76,7 +71,22 @@ struct LoginModel {
     let password: String
     
     func httpBody() -> String {
-        return "{\"udacity\": {\"username\": \"" + email + "\", \"password\": \"" + password + "\"}}"
+        do {
+            let JSON = objectToJSON()
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(JSON, options: NSJSONWritingOptions())
+            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+            return jsonString
+        }
+        catch {
+            return ("Error: \(error)")
+        }
+    }
+    
+    func objectToJSON() -> [String: AnyObject] {
+        return [
+            "email": email,
+            "password": password
+        ]
     }
 }
 
@@ -85,5 +95,4 @@ struct UserModel {
     let lastName: String!
     let uniqueKey: String!
     let sessionId: String!
-    
 }

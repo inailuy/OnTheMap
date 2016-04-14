@@ -5,27 +5,22 @@
 //  Created by inailuy on 4/5/16.
 //  Copyright © 2016 inailuy. All rights reserved.
 //
-
-import Foundation
-import UIKit
 import MapKit
 
 class MapVC: BaseVC, MKMapViewDelegate {
     @IBOutlet weak var mapview: MKMapView!
     var mapAnnotations : NSMutableArray!
     
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
     }
-   
+   //MARK: Button Actions
     @IBAction func postButtonPressed(sender: AnyObject) {
         NetworkArchitecture.sharedInstance.getStudentLocation()
         performSegueWithIdentifier("seguePosting", sender: nil)
     }
 
-    
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         performLogout()
         dismissViewControllerAnimated(true, completion: {})
@@ -34,25 +29,6 @@ class MapVC: BaseVC, MKMapViewDelegate {
     @IBAction func refreshButtonPressed(sender: AnyObject) {
        fetchData()
     }
-
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-    }
-    
-    func fetchData() {
-        mapview.alpha = 0.4
-        startAnimatingIndicator()
-        NetworkArchitecture.sharedInstance.getStudentLocations() {
-            () in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.mapview.alpha = 1.0
-                self.stopAnimatingIndicator()
-                self.addAnnotationsToMap()
-            })
-        }
-    }
-    
     //MARK: MKMapViewDelegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation.isKindOfClass(MKUserLocation){
@@ -93,5 +69,18 @@ class MapVC: BaseVC, MKMapViewDelegate {
         }
         
         mapview.addAnnotations(mapAnnotations as NSArray as! [LocationAnnotation])
+    }
+    //MARK: Misc
+    func fetchData() {
+        mapview.alpha = 0.4
+        startAnimatingIndicator()
+        NetworkArchitecture.sharedInstance.getStudentLocations() {
+            () in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.mapview.alpha = 1.0
+                self.stopAnimatingIndicator()
+                self.addAnnotationsToMap()
+            })
+        }
     }
 }

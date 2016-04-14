@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		331C3C721CBAE50C005B65CD /* StudentLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C3C711CBAE50C005B65CD /* StudentLocationModel.swift */; };
+		331C3C721CBAE50C005B65CD /* StudentStructModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C3C711CBAE50C005B65CD /* StudentStructModels.swift */; };
 		331C3C741CBC6EBD005B65CD /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C3C731CBC6EBD005B65CD /* LocationAnnotation.swift */; };
 		331C3C761CBCA786005B65CD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331C3C751CBCA786005B65CD /* FBSDKCoreKit.framework */; };
 		331C3C791CBCB63F005B65CD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 331C3C781CBCB63F005B65CD /* FBSDKLoginKit.framework */; };
@@ -28,7 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		331C3C711CBAE50C005B65CD /* StudentLocationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationModel.swift; sourceTree = "<group>"; };
+		331C3C711CBAE50C005B65CD /* StudentStructModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentStructModels.swift; sourceTree = "<group>"; };
 		331C3C731CBC6EBD005B65CD /* LocationAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
 		331C3C751CBCA786005B65CD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		331C3C771CBCAE31005B65CD /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 				33BF60501CB48BFF00B40D6D /* TableVC.swift */,
 				33BF60521CB48C0D00B40D6D /* InfoPostingVC.swift */,
 				333C702F1CB834FD00E90E2A /* NetworkArchitecture.swift */,
-				331C3C711CBAE50C005B65CD /* StudentLocationModel.swift */,
+				331C3C711CBAE50C005B65CD /* StudentStructModels.swift */,
 				331C3C731CBC6EBD005B65CD /* LocationAnnotation.swift */,
 				331C3C771CBCAE31005B65CD /* Bridging-Header.h */,
 				331C3C7C1CBD5C9C005B65CD /* Reachability.h */,
@@ -189,7 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33BF604F1CB48BF700B40D6D /* MapVC.swift in Sources */,
-				331C3C721CBAE50C005B65CD /* StudentLocationModel.swift in Sources */,
+				331C3C721CBAE50C005B65CD /* StudentStructModels.swift in Sources */,
 				33BF603B1CB468D700B40D6D /* AppDelegate.swift in Sources */,
 				331C3C7E1CBD5C9C005B65CD /* Reachability.m in Sources */,
 				333C70321CB835AD00E90E2A /* BaseVC.swift in Sources */,
