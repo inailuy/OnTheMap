@@ -527,17 +527,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yyr-xB-jS8">
+                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyr-xB-jS8">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </mapView>
-                            <view contentMode="scaleToFill" semanticContentAttribute="spatial" translatesAutoresizingMaskIntoConstraints="NO" id="v3c-Ng-OYc" userLabel="InvisibleView">
-                                <rect key="frame" x="0.0" y="-1" width="600" height="602"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="42o-4X-xhS" appends="YES" id="To8-fW-avi"/>
-                                </connections>
-                            </view>
+                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsN-6n-Ikx" userLabel="Top View">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="186"/>
                                 <subviews>
@@ -571,7 +564,8 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="URL"/>
+                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="lSP-U9-biH" id="CKl-yi-dOE"/>
                                         </connections>
@@ -684,6 +678,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" address="YES"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="U5K-Ki-MFN"/>
@@ -700,14 +695,12 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="v3c-Ng-OYc" firstAttribute="centerY" secondItem="yyr-xB-jS8" secondAttribute="centerY" id="1KM-Lw-TeQ"/>
                             <constraint firstItem="iHl-KM-JTT" firstAttribute="leading" secondItem="azr-GZ-7NS" secondAttribute="leading" id="3eK-oN-ZUT"/>
                             <constraint firstAttribute="trailing" secondItem="yyr-xB-jS8" secondAttribute="trailing" id="5y4-mc-DkO"/>
                             <constraint firstItem="azr-GZ-7NS" firstAttribute="bottom" secondItem="mHY-Gs-1cA" secondAttribute="top" id="7bO-7Y-L2e"/>
                             <constraint firstItem="iHl-KM-JTT" firstAttribute="top" secondItem="Bxo-28-427" secondAttribute="top" constant="186" id="9Ax-SG-ER1"/>
-                            <constraint firstItem="v3c-Ng-OYc" firstAttribute="leading" secondItem="azr-GZ-7NS" secondAttribute="leading" id="Bsc-TE-iPk"/>
-                            <constraint firstItem="v3c-Ng-OYc" firstAttribute="top" secondItem="Bxo-28-427" secondAttribute="topMargin" constant="-1" id="E0B-MC-hZB"/>
                             <constraint firstItem="yyr-xB-jS8" firstAttribute="top" secondItem="Bxo-28-427" secondAttribute="top" id="Fal-pV-Kw6"/>
                             <constraint firstItem="iHl-KM-JTT" firstAttribute="leading" secondItem="azr-GZ-7NS" secondAttribute="leading" id="GBu-Hp-IFN"/>
                             <constraint firstItem="azr-GZ-7NS" firstAttribute="top" secondItem="iHl-KM-JTT" secondAttribute="bottom" id="HCj-gr-wce"/>
@@ -716,7 +709,6 @@
                             <constraint firstItem="iHl-KM-JTT" firstAttribute="top" secondItem="tsN-6n-Ikx" secondAttribute="bottom" id="PkW-PD-ltK"/>
                             <constraint firstItem="azr-GZ-7NS" firstAttribute="top" secondItem="iHl-KM-JTT" secondAttribute="bottom" id="RzX-HZ-OMl"/>
                             <constraint firstItem="tsN-6n-Ikx" firstAttribute="trailing" secondItem="iHl-KM-JTT" secondAttribute="trailing" id="SDe-zz-3oH"/>
-                            <constraint firstItem="v3c-Ng-OYc" firstAttribute="trailing" secondItem="iHl-KM-JTT" secondAttribute="trailing" id="a0X-76-kjB"/>
                             <constraint firstItem="tsN-6n-Ikx" firstAttribute="top" secondItem="yyr-xB-jS8" secondAttribute="top" id="cor-RD-tac"/>
                             <constraint firstItem="tsN-6n-Ikx" firstAttribute="trailing" secondItem="iHl-KM-JTT" secondAttribute="trailing" id="cyv-fw-mdc"/>
                             <constraint firstItem="tsN-6n-Ikx" firstAttribute="leading" secondItem="iHl-KM-JTT" secondAttribute="leading" id="e1L-HT-IMi"/>
@@ -774,6 +766,9 @@
                                 <include reference="f7e-Ch-QWD"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5vo-tO-EpX" appends="YES" id="Wkp-9c-jJR"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="azr-GZ-7NS" id="hdo-hY-dX4"/>
@@ -787,9 +782,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HRv-t4-Lvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="42o-4X-xhS">
+                <tapGestureRecognizer id="5vo-tO-EpX">
                     <connections>
-                        <action selector="tapGestureRecognized:" destination="lSP-U9-biH" id="vEq-3K-UlS"/>
+                        <action selector="tapGestureRecognized:" destination="lSP-U9-biH" id="wEu-kh-kUn"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -838,6 +833,6 @@
         <image name="udacity" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bRy-ZN-acd"/>
+        <segue reference="TsU-dx-hCx"/>
     </inferredMetricsTieBreakers>
 </document>

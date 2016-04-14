@@ -24,8 +24,6 @@ class NetworkArchitecture {
 
     var userModel : UserModel!
     var currentStudentLocation :StudentLocationModel!
-    
-    
     var studentLocationArray = [StudentLocationModel]()
     
     var session : NSURLSession!
@@ -50,7 +48,7 @@ class NetworkArchitecture {
             })
             return
         }
-        
+         
         let request = createRequest(NSURL.init(string: udacityURL)!, method:POST)
         if fbAcessToken != nil {
             let bodyString = "{\"facebook_mobile\": {\"access_token\": \"" + fbAcessToken.tokenString + ";\"}}"

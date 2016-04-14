@@ -86,7 +86,7 @@ class MapVC: BaseVC, MKMapViewDelegate {
 
         for studentLocation in NetworkArchitecture.sharedInstance.studentLocationArray {
             let coordination = CLLocationCoordinate2DMake(Double(studentLocation.latitude), Double(studentLocation.longitude))
-            let title = studentLocation.firstName + " " + studentLocation.lastName
+            let title = studentLocation.fullName()
             
             let annotation = LocationAnnotation(title: title, coordinate: coordination, info: studentLocation.mediaURL, mediaURL: studentLocation.mediaURL, subtitle: studentLocation.mediaURL)
             mapAnnotations.addObject(annotation)

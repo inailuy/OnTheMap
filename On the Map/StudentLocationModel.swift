@@ -19,10 +19,6 @@ struct StudentLocationModel {
     var latitude : Float
     var longitude : Float
     
-    func objectToString() -> String {
-       return "{\"uniqueKey\": \""+uniqueKey+"\", \"firstName\": \""+firstName+"\", \"lastName\": \""+lastName+"\",\"mapString\": \""+mapString+"\", \"mediaURL\": \""+mediaURL+"\",\"latitude\": "+String(latitude)+", \"longitude\": "+String(longitude)+"}"
-    }
-    
     init (objectId : String, uniqueKey: String, firstName: String, lastName: String, mapString: String, mediaURL: String, latitude: Float, longitude: Float){
         self.objectId = objectId
         self.uniqueKey = uniqueKey
@@ -44,4 +40,50 @@ struct StudentLocationModel {
             self.latitude = dict["latitude"] as! Float
             self.longitude = dict["longitude"] as! Float
     }
+    
+    func objectToString() -> String {
+        do {
+            let JSON = objectToJSON()
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(JSON, options: NSJSONWritingOptions())
+            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as! String
+            return jsonString
+        }
+        catch {
+            return ("Error: \(error)")
+        }
+    }
+    
+    func objectToJSON() -> [String: AnyObject] {
+        let jsonObject: [String: AnyObject] = [
+            "uniqueKey": uniqueKey,
+            "firstName": firstName,
+            "lastName": lastName,
+            "mapString": mapString,
+            "mediaURL": mediaURL,
+            "latitude": latitude,
+            "longitude": longitude
+        ]
+        return jsonObject
+    }
+
+    func fullName() -> String {
+        return firstName + " " + lastName
+    }
+}
+
+struct LoginModel {
+    let email: String
+    let password: String
+    
+    func httpBody() -> String {
+        return "{\"udacity\": {\"username\": \"" + email + "\", \"password\": \"" + password + "\"}}"
+    }
+}
+
+struct UserModel {
+    let firstName: String!
+    let lastName: String!
+    let uniqueKey: String!
+    let sessionId: String!
+    
 }

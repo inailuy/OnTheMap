@@ -55,7 +55,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         let nameLabel = cell?.viewWithTag(100) as! UILabel
         let urlLabel = cell?.viewWithTag(101) as! UILabel
-        nameLabel.text = studentLocationModel.firstName + " " + studentLocationModel.lastName
+        nameLabel.text = studentLocationModel.fullName()
         urlLabel.text = studentLocationModel.mediaURL
         
         return cell!

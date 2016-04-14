@@ -23,6 +23,20 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         loginView.readPermissions = ["public_profile", "email", "user_friends"]
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Indenting Textfields
+        indentTextField(emailTextField)
+        indentTextField(passwordTextField)
+        
+    }
+    
+    func indentTextField(textField:  UITextField) {
+        let spacerView = UIView(frame:CGRect(x:0, y:0, width:15, height:15))
+        textField.leftViewMode = UITextFieldViewMode.Always
+        textField.leftView = spacerView
+    }
+    
     @IBAction func tapGestureRecognized(sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -51,6 +65,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        //FBSDK Required method
     }
     
     @IBAction func signupButtonPressed(sender: AnyObject) {        
