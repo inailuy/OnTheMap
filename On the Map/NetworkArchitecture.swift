@@ -151,13 +151,17 @@ class NetworkArchitecture {
             }
             do {
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject] {
-                    studentLocationArray.removeAll()
-                    let array = json["results"] as! NSArray
-                    if array.count > 0 {
-                        for dictionary in array {
-                            let studentLocation = StudentLocationModel(fromDict: dictionary as! NSDictionary)
-                            studentLocationArray.append(studentLocation)
+                    if json["error"] == nil {
+                        studentLocationArray.removeAll()
+                        let array = json["results"] as! NSArray
+                        if array.count > 0 {
+                            for dictionary in array {
+                                let studentLocation = StudentLocationModel(fromDict: dictionary as! NSDictionary)
+                                studentLocationArray.append(studentLocation)
+                            }
                         }
+                    } else {
+                        completion(errorString: json["error"] as? String)
                     }
                 }
             }
@@ -211,8 +215,10 @@ class NetworkArchitecture {
                 if error != nil { /* Handle error */ return }
                 do {
                     if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject] {
-                        let array = json["results"] as! NSArray
-                        self.currentStudentLocation = StudentLocationModel(fromDict: array.lastObject as! NSDictionary)
+                        if json["error"] == nil {
+                            let array = json["results"] as! NSArray
+                            self.currentStudentLocation = StudentLocationModel(fromDict: array.lastObject as! NSDictionary)
+                        }
                     }
                 }
                 catch {}
