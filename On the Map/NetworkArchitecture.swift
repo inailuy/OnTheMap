@@ -6,7 +6,8 @@
 //  Copyright © 2016 inailuy. All rights reserved.
 //
 class NetworkArchitecture {
-
+    let connectionError = "No Internet Connection"
+    
     let GET = "GET"
     let POST = "POST"
     let DELETE = "DELETE"
@@ -36,15 +37,12 @@ class NetworkArchitecture {
         return request
     }
     //MARK: Udacity API
-    func creatingSession(loginModel :LoginModel?, loginVC : LoginVC) {
-        if hasConnectivity() == false {
-            dispatch_async(dispatch_get_main_queue(), {
-                loginVC.stopAnimatingIndicator()
-                loginVC.handleErrors("No Internet Connection")
-            })
+    func creatingSession(loginModel :LoginModel?, completion: (errorString: String?) -> Void) {
+        if !hasConnectivity() {
+            completion(errorString: connectionError)
             return
         }
-         
+        
         let request = createRequest(NSURL.init(string: udacityURL)!, method:POST)
         if fbAcessToken != nil {
             let bodyString = "{\"facebook_mobile\": {\"access_token\": \"" + fbAcessToken.tokenString + ";\"}}"
@@ -63,9 +61,7 @@ class NetworkArchitecture {
                 let jsonArray = try NSJSONSerialization.JSONObjectWithData(newData, options:[])
                 
                 if let message = jsonArray["error"] as? String{
-                    dispatch_async(dispatch_get_main_queue(),{
-                        loginVC.handleErrors(message)
-                    })
+                    completion(errorString: message)
                 }else {
                     let account = jsonArray["account"]
                     let accountKey = account!!["key"] as! String
@@ -74,9 +70,7 @@ class NetworkArchitecture {
                     let sessionId = session!!["id"] as! String
                     
                     self.getPublicData(accountKey, sessionId: sessionId)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        loginVC.dismissView()
-                        })
+                    completion(errorString: nil)
                 }
                 
             }
@@ -87,7 +81,20 @@ class NetworkArchitecture {
         task.resume()
     }
     
-    func deletingSession() {
+    func deletingSession(completion: (didFinished: Bool, errorString: String?) -> Void) {
+        if !hasConnectivity() {
+            completion(didFinished: true, errorString: connectionError)
+            return
+        }
+        
+        if NetworkArchitecture.sharedInstance.fbAcessToken != nil {
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+            NetworkArchitecture.sharedInstance.fbAcessToken = nil
+            
+            completion(didFinished: true, errorString: nil)
+        }
+        
         let request = NSMutableURLRequest(URL: NSURL(string: udacityURL)!)
         request.HTTPMethod = DELETE
         var xsrfCookie: NSHTTPCookie? = nil
@@ -101,9 +108,10 @@ class NetworkArchitecture {
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error…
+                completion(didFinished: false, errorString: error?.localizedDescription)
                 return
             }
-            //let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
+            completion(didFinished: true, errorString: error?.localizedDescription)
         }
         task.resume()
     }
@@ -132,7 +140,12 @@ class NetworkArchitecture {
         task.resume()
     }
     //MARK: Parse API
-    func getStudentLocations(completion: () -> Void) {
+    func getStudentLocations(completion: (errorString: String?) -> Void) {
+        if !hasConnectivity() {
+            completion(errorString: connectionError)
+            return
+        }
+        
         let request = NSMutableURLRequest(URL: NSURL(string: parseStudentURL+"?limit=100&order=-updatedAt")!)
         request.addValue(ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -156,12 +169,17 @@ class NetworkArchitecture {
             catch {
                 print("Error: \(error)")
             }
-            completion()
+            completion(errorString: nil)
         }
         task.resume()
     }
     
-    func postStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool) -> Void) {
+    func postStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool, errorString: String?) -> Void) {
+        if !hasConnectivity() {
+            completion(didFinished: true, errorString: connectionError)
+            return
+        }
+        
         if studentLocation.objectId != "" {
             putStudentLocation(studentLocation, completion: completion)
             return
@@ -180,36 +198,43 @@ class NetworkArchitecture {
             if error != nil { // Handle error…
                 return
             }
-            completion(didFinished: true)
+            completion(didFinished: true, errorString:nil)
         }
         task.resume()
     }
     // Querying for a StudentLocation
     func getStudentLocation() {
-        let urlString = parseStudentURL+"?where=%7B%22uniqueKey%22%3A%22"+userModel.uniqueKey+"%22%7D"
-        let url = NSURL(string: urlString)
-        let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = GET
-        request.addValue(ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { /* Handle error */ return }
-            do {
-                if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject] {
-                    let array = json["results"] as! NSArray
-                    self.currentStudentLocation = StudentLocationModel(fromDict: array.lastObject as! NSDictionary)
+        if userModel != nil {
+            let urlString = parseStudentURL+"?where=%7B%22uniqueKey%22%3A%22"+userModel.uniqueKey+"%22%7D"
+            let url = NSURL(string: urlString)
+            let request = NSMutableURLRequest(URL: url!)
+            request.HTTPMethod = GET
+            request.addValue(ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue(RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithRequest(request) { data, response, error in
+                if error != nil { /* Handle error */ return }
+                do {
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject] {
+                        let array = json["results"] as! NSArray
+                        self.currentStudentLocation = StudentLocationModel(fromDict: array.lastObject as! NSDictionary)
+                    }
                 }
+                catch {
+                    print("Error: \(error)")
+                }
+                
             }
-            catch {
-                print("Error: \(error)")
-            }
-            
+            task.resume()
         }
-        task.resume()
     }
     // Updating StudentLocation
-    func putStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool) -> Void) {
+    func putStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool, errorString: String?) -> Void) {
+        if !hasConnectivity() {
+            completion(didFinished: true, errorString: connectionError)
+            return
+        }
+        
         let urlString = parseStudentURL+"/"+studentLocation.objectId
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
@@ -223,7 +248,7 @@ class NetworkArchitecture {
             if error != nil { // Handle error…
                 return
             }
-            completion(didFinished: true)
+            completion(didFinished: true, errorString: nil)
         }
         task.resume()
     }

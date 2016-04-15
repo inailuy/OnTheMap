@@ -23,7 +23,6 @@ class MapVC: BaseVC, MKMapViewDelegate {
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         performLogout()
-        dismissViewControllerAnimated(true, completion: {})
     }
     
     @IBAction func refreshButtonPressed(sender: AnyObject) {
@@ -70,12 +69,16 @@ class MapVC: BaseVC, MKMapViewDelegate {
     func fetchData() {
         mapview.alpha = 0.4
         startAnimatingIndicator()
-        NetworkArchitecture.sharedInstance.getStudentLocations() { () in
+        NetworkArchitecture.sharedInstance.getStudentLocations({ (errorString: String?) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.mapview.alpha = 1.0
                 self.stopAnimatingIndicator()
-                self.addAnnotationsToMap()
+                if errorString == nil {
+                    self.addAnnotationsToMap()
+                } else {
+                    self.handleErrors(errorString!)
+                }
             })
-        }
+        })
     }
 }

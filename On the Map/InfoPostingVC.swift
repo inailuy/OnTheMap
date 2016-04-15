@@ -50,9 +50,12 @@ class InfoPostingVC: BaseVC, UITextViewDelegate {
                                                            lastName: lastName, mapString: mapString, mediaURL: mediaURL,
                                                            latitude: Float((coord.latitude)), longitude: Float((coord.longitude)))
                 
-                NetworkArchitecture.sharedInstance.postStudentLocation(studentLocation, completion: { (didFinished: Bool) in
-                    if didFinished == true {
+                NetworkArchitecture.sharedInstance.postStudentLocation(studentLocation,
+                                                                       completion: { (didFinished: Bool, errorString: String?) in
+                    if didFinished == true && errorString == nil {
                         self.dismissViewControllerAnimated(true, completion: {})
+                    } else if errorString != nil{
+                        self.handleErrors(errorString!)
                     }
                 })
             } else {

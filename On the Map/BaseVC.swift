@@ -14,10 +14,6 @@ class BaseVC: UIViewController, UIAlertViewDelegate {
         activityIndicator.frame = CGRectMake(view.frame.size.width/2 - 25, view.frame.size.height/2 - 25, 50, 50);
         view.addSubview(activityIndicator)
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
     //MARK: Spinner Animation
     func startAnimatingIndicator(){
         activityIndicator.startAnimating()
@@ -38,12 +34,14 @@ class BaseVC: UIViewController, UIAlertViewDelegate {
     }
     
     func performLogout() {
-        if NetworkArchitecture.sharedInstance.fbAcessToken != nil {
-            let loginManager = FBSDKLoginManager()
-            loginManager.logOut()
-            NetworkArchitecture.sharedInstance.fbAcessToken = nil
-        } else {
-            NetworkArchitecture.sharedInstance.deletingSession()   
-        }
+            NetworkArchitecture.sharedInstance.deletingSession({ (didFinished: Bool, errorString: String?) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if errorString != nil {
+                        self.handleErrors(errorString!)
+                    } else {
+                        self.dismissViewControllerAnimated(true, completion: {})
+                    }
+                })
+            })
     }
 }

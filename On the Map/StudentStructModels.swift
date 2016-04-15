@@ -84,8 +84,10 @@ struct LoginModel {
     
     func objectToJSON() -> [String: AnyObject] {
         return [
-            "email": email,
-            "password": password
+            "udacity" : [
+                "username": email,
+                "password": password
+            ]
         ]
     }
 }

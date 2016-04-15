@@ -28,7 +28,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
     //MARK: Button/Gesture Actions
     @IBAction func loginButtonPressed(sender: UIButton) {
         let login = LoginModel(email: emailTextField.text!, password: passwordTextField.text!)
-        NetworkArchitecture.sharedInstance .creatingSession(login, loginVC: self)
+        handleLogin(login)
         startAnimatingIndicator()
     }
     
@@ -42,7 +42,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         else {
             if result.grantedPermissions.contains("email") {
                 NetworkArchitecture.sharedInstance.fbAcessToken = result.token
-                NetworkArchitecture.sharedInstance.creatingSession(nil, loginVC: self)
+                handleLogin(nil)
             }
         }
     }
@@ -61,7 +61,7 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         } else {
             view.endEditing(true)
             let login = LoginModel(email: emailTextField.text!, password: passwordTextField.text!)
-            NetworkArchitecture.sharedInstance.creatingSession(login, loginVC: self)
+            handleLogin(login)
             startAnimatingIndicator()
         }
         return true
@@ -79,5 +79,18 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         let spacerView = UIView(frame:CGRect(x:0, y:0, width:15, height:15))
         textField.leftViewMode = UITextFieldViewMode.Always
         textField.leftView = spacerView
+    }
+    
+    func handleLogin(login: LoginModel?) {
+        NetworkArchitecture.sharedInstance.creatingSession(login, completion: {(errorString: String?) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if errorString == nil {
+                    self.dismissView()
+                } else {
+                    self.stopAnimatingIndicator()
+                    self.handleErrors(errorString!)
+                }
+            })
+        })
     }
 }

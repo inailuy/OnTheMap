@@ -21,7 +21,6 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         performLogout()
-        dismissViewControllerAnimated(true, completion: {})
     }
 
     @IBAction func refreshButtonPressed(sender: AnyObject) {
@@ -57,12 +56,16 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     func fetchData() {
         tableView.alpha = 0.4
         startAnimatingIndicator()
-        NetworkArchitecture.sharedInstance.getStudentLocations() { () in
+        NetworkArchitecture.sharedInstance.getStudentLocations({ (errorString: String?) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.tableView.alpha = 1.0
                 self.stopAnimatingIndicator()
-                self.tableView.reloadData()
+                if errorString == nil {
+                    self.tableView.reloadData()
+                } else {
+                    self.handleErrors(errorString!)
+                }
             })
-        }
+        })
     }
 }
