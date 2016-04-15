@@ -54,6 +54,7 @@ class NetworkArchitecture {
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil { // Handle error…
+                completion(errorString: error?.localizedDescription)
                 return
             }
             let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
@@ -74,9 +75,7 @@ class NetworkArchitecture {
                 }
                 
             }
-            catch {
-                print("Error: \(error)")
-            }
+            catch {}
         }
         task.resume()
     }
@@ -120,9 +119,7 @@ class NetworkArchitecture {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/"+userKey)!)
         session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error...
-                return
-            }
+            if error != nil { /* Handle error */ return }
             let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
             do {
                 if let json = try NSJSONSerialization.JSONObjectWithData(newData, options: []) as? [String:AnyObject] {
@@ -151,7 +148,8 @@ class NetworkArchitecture {
         request.addValue(RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error...
+            if error != nil {
+                completion(errorString: error?.localizedDescription)
                 return
             }
             do {
@@ -166,15 +164,14 @@ class NetworkArchitecture {
                     }
                 }
             }
-            catch {
-                print("Error: \(error)")
-            }
+            catch {}
             completion(errorString: nil)
         }
         task.resume()
     }
     
-    func postStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool, errorString: String?) -> Void) {
+    func postStudentLocation(studentLocation: StudentLocationModel,
+                             completion: (didFinished: Bool, errorString: String?) -> Void) {
         if !hasConnectivity() {
             completion(didFinished: true, errorString: connectionError)
             return
@@ -195,7 +192,8 @@ class NetworkArchitecture {
         session = NSURLSession.sharedSession()
         
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
+            if error != nil {
+                completion (didFinished: true, errorString: error?.localizedDescription)
                 return
             }
             completion(didFinished: true, errorString:nil)
@@ -229,12 +227,12 @@ class NetworkArchitecture {
         }
     }
     // Updating StudentLocation
-    func putStudentLocation(studentLocation: StudentLocationModel, completion: (didFinished: Bool, errorString: String?) -> Void) {
+    func putStudentLocation(studentLocation: StudentLocationModel,
+                            completion: (didFinished: Bool, errorString: String?) -> Void) {
         if !hasConnectivity() {
             completion(didFinished: true, errorString: connectionError)
             return
         }
-        
         let urlString = parseStudentURL+"/"+studentLocation.objectId
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
@@ -245,14 +243,15 @@ class NetworkArchitecture {
         request.HTTPBody = studentLocation.objectToString().dataUsingEncoding(NSUTF8StringEncoding)
         session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
+            if error != nil {
+                completion(didFinished: true, errorString: error?.localizedDescription)
                 return
             }
             completion(didFinished: true, errorString: nil)
         }
         task.resume()
     }
-    
+    // Checking Internet Connectivity
     func hasConnectivity() -> Bool {
         let reachability: Reachability = Reachability.reachabilityForInternetConnection()
         let networkStatus: Int = reachability.currentReachabilityStatus().rawValue

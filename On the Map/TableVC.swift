@@ -6,7 +6,6 @@
 //  Copyright © 2016 inailuy. All rights reserved.
 //
 class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {

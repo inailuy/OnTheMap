@@ -49,7 +49,6 @@ class InfoPostingVC: BaseVC, UITextViewDelegate {
                 let studentLocation = StudentLocationModel(objectId: objectId, uniqueKey: uniqueKey, firstName: firstName,
                                                            lastName: lastName, mapString: mapString, mediaURL: mediaURL,
                                                            latitude: Float((coord.latitude)), longitude: Float((coord.longitude)))
-                
                 NetworkArchitecture.sharedInstance.postStudentLocation(studentLocation,
                                                                        completion: { (didFinished: Bool, errorString: String?) in
                     if didFinished == true && errorString == nil {

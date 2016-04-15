@@ -23,7 +23,6 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         // Indenting Textfields
         indentTextField(emailTextField)
         indentTextField(passwordTextField)
-        
     }
     //MARK: Button/Gesture Actions
     @IBAction func loginButtonPressed(sender: UIButton) {
@@ -32,7 +31,8 @@ class LoginVC: BaseVC , UITextFieldDelegate, FBSDKLoginButtonDelegate{
         startAnimatingIndicator()
     }
     
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+    func loginButton(loginButton: FBSDKLoginButton!,
+                     didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if ((error) != nil){
             // Process error
         }
