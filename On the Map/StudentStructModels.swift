@@ -5,6 +5,8 @@
 //  Created by inailuy on 4/10/16.
 //  Copyright © 2016 inailuy. All rights reserved.
 //
+var studentLocationArray = [StudentLocationModel]()
+
 struct StudentLocationModel {
     var objectId : String
     var uniqueKey: String

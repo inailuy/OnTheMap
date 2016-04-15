@@ -21,7 +21,6 @@ class NetworkArchitecture {
 
     var userModel : UserModel!
     var currentStudentLocation :StudentLocationModel!
-    var studentLocationArray = [StudentLocationModel]()
     
     var session : NSURLSession!
     var fbAcessToken : FBSDKAccessToken!
@@ -130,9 +129,7 @@ class NetworkArchitecture {
                     self.userModel = UserModel(firstName: firstName, lastName: lastName, uniqueKey: userKey, sessionId: sessionId)
                 }
             }
-            catch {
-                print("Error: \(error)")
-            }
+            catch {}
         }
         task.resume()
     }
@@ -154,12 +151,12 @@ class NetworkArchitecture {
             }
             do {
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject] {
-                    self.studentLocationArray.removeAll()
+                    studentLocationArray.removeAll()
                     let array = json["results"] as! NSArray
                     if array.count > 0 {
                         for dictionary in array {
                             let studentLocation = StudentLocationModel(fromDict: dictionary as! NSDictionary)
-                            self.studentLocationArray.append(studentLocation)
+                            studentLocationArray.append(studentLocation)
                         }
                     }
                 }
@@ -218,10 +215,7 @@ class NetworkArchitecture {
                         self.currentStudentLocation = StudentLocationModel(fromDict: array.lastObject as! NSDictionary)
                     }
                 }
-                catch {
-                    print("Error: \(error)")
-                }
-                
+                catch {}
             }
             task.resume()
         }

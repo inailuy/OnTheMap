@@ -49,13 +49,14 @@ class InfoPostingVC: BaseVC, UITextViewDelegate {
                 let studentLocation = StudentLocationModel(objectId: objectId, uniqueKey: uniqueKey, firstName: firstName,
                                                            lastName: lastName, mapString: mapString, mediaURL: mediaURL,
                                                            latitude: Float((coord.latitude)), longitude: Float((coord.longitude)))
-                NetworkArchitecture.sharedInstance.postStudentLocation(studentLocation,
-                                                                       completion: { (didFinished: Bool, errorString: String?) in
-                    if didFinished == true && errorString == nil {
-                        self.dismissViewControllerAnimated(true, completion: {})
-                    } else if errorString != nil{
-                        self.handleErrors(errorString!)
-                    }
+                NetworkArchitecture.sharedInstance.postStudentLocation(studentLocation, completion: { (didFinished: Bool, errorString: String?) in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if didFinished == true && errorString == nil {
+                            self.dismissViewControllerAnimated(true, completion: {})
+                        } else if errorString != nil{
+                            self.handleErrors(errorString!)
+                        }
+                    })
                 })
             } else {
                 handleErrors("Enter Valid URL")

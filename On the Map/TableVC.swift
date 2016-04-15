@@ -27,11 +27,11 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     // MARK: UITableView Delegate/DataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return NetworkArchitecture.sharedInstance.studentLocationArray.count
+        return studentLocationArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let studentLocationModel = NetworkArchitecture.sharedInstance.studentLocationArray[indexPath.row]
+        let studentLocationModel = studentLocationArray[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("id")
         
         let nameLabel = cell?.viewWithTag(100) as! UILabel
@@ -43,7 +43,7 @@ class TableVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let studentLocationModel = NetworkArchitecture.sharedInstance.studentLocationArray[indexPath.row]
+        let studentLocationModel = studentLocationArray[indexPath.row]
         let url = NSURL(string: studentLocationModel.mediaURL)
         if url != nil {
             UIApplication.sharedApplication().openURL(url!)

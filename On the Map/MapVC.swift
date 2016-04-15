@@ -56,7 +56,7 @@ class MapVC: BaseVC, MKMapViewDelegate {
     func addAnnotationsToMap() {
         mapAnnotations = NSMutableArray()
         mapview.removeAnnotations(mapview.annotations)
-        for studentLocation in NetworkArchitecture.sharedInstance.studentLocationArray {
+        for studentLocation in studentLocationArray {
             let coordination = CLLocationCoordinate2DMake(Double(studentLocation.latitude), Double(studentLocation.longitude))
             let title = studentLocation.fullName()
             let annotation = LocationAnnotation(title: title, coordinate: coordination, info: studentLocation.mediaURL,
